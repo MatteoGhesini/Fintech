@@ -1,4 +1,32 @@
 function [K,x_hat,y_hat_minus] = KalmanFilter(model,P,step)
+%KalmanFilter Use an iterative application of the Kalman Filter algorithm
+%
+%   [K,x_hat,y_hat_minus] = KalmanFilter(model,P,step) 
+%   
+%   INPUT:
+%   - The object model can be easely created using InitializeModel
+%   - The mendatory parameter P is an initial value necessary for the
+%   algorithm, try with different P for a sensitivity analysis (suggested:
+%   P=ones)
+%   - The optional parameter step works like a rolling window inside the
+%   algorithm
+%   
+%   OUTPUT:
+%   - K is the gain of the Kalman Filter
+%   - x_hat are the predicted state 
+%   - y_hat_minus error corrected response of prediction
+%   
+%   The function uses: retrivingData
+%
+%   See also InitializeModel, retrivingData
+%
+    
+    if nargin<2
+        error('Mendatory Information Missing')
+    elseif nargin<3
+        step=1;
+    end
+
     [y, F, ~, H, ~, V1, V2, V12] = retrivingData(model);
     
     n = size(y, 1);  % Number of time steps
@@ -27,10 +55,12 @@ function [K,x_hat,y_hat_minus] = KalmanFilter(model,P,step)
         x_hat_minus(:,i+1) = x_hat(:,i);
     end
     
-    for i = 1:n
-        if x_hat(1,i) == 0
-            x_hat(:,i) = x_hat(:,i-1);
+    if step ~=0
+        for i = 1:n
+            if x_hat(1,i) == 0
+                x_hat(:,i) = x_hat(:,i-1);
+            end
         end
     end
 
-end
+end % end KalmanFilter

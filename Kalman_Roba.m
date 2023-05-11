@@ -50,18 +50,30 @@ y = portfolioReturns;
 H = futuresReturns;
 % D = 0 so the associated term is removed
 V1 = eye(m).*var(futuresReturns); % va cambiato
-V2 = 0; % va cambiato
+V1 = eye(m).*std(futuresReturns); % va cambiato
+V2 = std(portfolioReturns); % va cambiato
 % V12 = 0 so the associated term is removed
 
 model = InitializeModel(y, [], [], H, [], V1, V2, []);
-P = ones(m,m); 
+x_initial = ones(m,1)*0.065;
+P = zeros(m,m); 
 step = 1; % define the rolling windows = one_week*step
 
 tic
-[Gain,Weights] = KalmanFilter(model,P,step);
+[Gain,Weights,yy] = KalmanFilter(model,x_initial,P,step);
 toc
 
-Prediction = sum(futuresReturns.*Weights',2);
+Prediction = sum(futuresReturns(2:end,:).*Weights(:,1:end-1)',2);
+
+TE = Prediction - y(2:end);
+TEV = std(TE)*sqrt(52)
+TE = ret2price(Prediction) - target(2:end);
+TEV = std(TE)*sqrt(52)
+
+figure()
+plot(Date_ME,target,'Color','b')
+hold on
+plot(Date_ME,ret2price(yy),'Color','r')
 
 figure()
 plot(Date_ME(2:end),y,'Color','b')
@@ -71,7 +83,7 @@ plot(Date_ME(2:end),sum(futuresReturns.*Weights',2),'r.','MarkerSize',10)
 figure()
 plot(Date_ME,target,'Color','b')
 hold on
-plot(Date_ME,ret2price(Prediction),'r.','MarkerSize',1)
+plot(Date_ME(2:end),ret2price(Prediction),'r.','MarkerSize',1)
 
 %%
 % Statistical meausers

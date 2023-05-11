@@ -16,6 +16,7 @@ function model = InitializeModel(y, F, G, H, D, V1, V2, V12)
         error('Mendatory Information Missing')
     end
 
+    model.y = y;
     model.F = F;
     model.G = G; 
     model.H = H;

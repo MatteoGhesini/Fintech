@@ -1,13 +1,16 @@
-function [K,x_hat,y_hat_minus] = KalmanFilter(model,P,step)
+function [K,x_hat,y_hat_minus] = KalmanFilter(model,x_initial,P,step)
 %KalmanFilter Use an iterative application of the Kalman Filter algorithm
 %
 %   [K,x_hat,y_hat_minus] = KalmanFilter(model,P,step) 
 %   
 %   INPUT:
 %   - The object model can be easely created using InitializeModel
+%   - The mendatory parameter x_initial is an initial value necessary for 
+%   the algorithm, try with different P for a sensitivity analysis 
+%   (suggested: zeros or solution of the first step)
 %   - The mendatory parameter P is an initial value necessary for the
 %   algorithm, try with different P for a sensitivity analysis (suggested:
-%   P=ones)
+%   P=ones or the variance of the residual on x_initial)
 %   - The optional parameter step works like a rolling window inside the
 %   algorithm
 %   
@@ -21,9 +24,9 @@ function [K,x_hat,y_hat_minus] = KalmanFilter(model,P,step)
 %   See also InitializeModel, retrivingData
 %
     
-    if nargin<2
+    if nargin<3
         error('Mendatory Information Missing')
-    elseif nargin<3
+    elseif nargin<4
         step=1;
     end
 
@@ -34,6 +37,7 @@ function [K,x_hat,y_hat_minus] = KalmanFilter(model,P,step)
 
     K = zeros(m,n);            % initialize the gain dimensionality
     x_hat_minus = zeros(m,n);  % initialize x_hat(t|t-1)
+    x_hat_minus(:,1) = x_initial;
     x_hat = zeros(m,n);        % initialize x_hat(t+1|t)
     y_hat_minus = zeros(1,n);  % initialize y_hat(t|t-1)
     e = zeros(1,n);            % initialize error vector
@@ -56,7 +60,7 @@ function [K,x_hat,y_hat_minus] = KalmanFilter(model,P,step)
     end
     
     if step ~=0
-        for i = 1:n
+        for i = 2:n
             if x_hat(1,i) == 0
                 x_hat(:,i) = x_hat(:,i-1);
             end

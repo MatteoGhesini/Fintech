@@ -13,10 +13,11 @@ function [Cost, NumberVariations] = ComputeCost(Weights,CostTransaction)
 
     m = size(Weights,1);
     n = size(Weights,2);
-
-    NumberVariations = zeros(m,1) + n;
     
+    NumberVariations = zeros(m,1) + n;
     Variations = round(Weights(:,1:end-1) - Weights(:,2:end),4);
+   
+
     for i = 1:m
         NumberVariations(i) = NumberVariations(i) - length(find(Variations(i,:)==0));
     end

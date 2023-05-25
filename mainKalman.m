@@ -27,23 +27,45 @@ function [Weights,TEV_return] = mainKalman(model,x_initial,Returns,Date,Benchmar
         display(['TEV Benchmark = ',num2str(TEV_return)])
     end
 
+%     figure()
+%     subplot(1,2,1)
+%     plot(Date,ret2price(y),'Color','b', 'LineWidth', 1.5)
+%     hold on
+%     plot(Date,ret2price(Prediction),'Color','r', 'LineWidth', 1.5)
+%     xlabel("years")
+%     ylabel("prices")
+%     if nargin<5
+%         legend('Target','Predicted')
+%     else
+%         plot(Date,ret2price(Benchmark),'Color','g', 'LineWidth', 1.5)
+%         xlabel("years")
+%         ylabel("prices")
+%         legend('Target','Predicted','Benchmark')
+%     end
+% 
+%     subplot(1,2,2)
+%     plot(Date(2:end),y,'Color','b', 'LineWidth', 1.5)
+%     hold on
+%     plot(Date(2:end),Prediction,'r.','MarkerSize',10)
+%     xlabel("years")
+%     ylabel("returns")
+%     legend('Target','Predicted')
+
     figure()
-    subplot(1,2,1)
-    plot(Date,ret2price(y),'Color','b')
+    plot(Date,ret2price(y),'Color','b', 'LineWidth', 1.5)
     hold on
-    plot(Date,ret2price(Prediction),'Color','r')
+    plot(Date,ret2price(Prediction),'Color','r', 'LineWidth', 1.5)
+    xlabel("years")
+    ylabel("prices")
     if nargin<5
         legend('Target','Predicted')
     else
-        plot(Date,ret2price(Benchmark),'Color','g')
+        plot(Date,ret2price(Benchmark),'Color','g', 'LineWidth', 1.5)
+        xlabel("years")
+        ylabel("prices")
         legend('Target','Predicted','Benchmark')
     end
 
-    subplot(1,2,2)
-    plot(Date(2:end),y,'Color','b')
-    hold on
-    plot(Date(2:end),Prediction,'r.','MarkerSize',10)
-    legend('Target','Predicted')
 
 end % end mainKalman
 

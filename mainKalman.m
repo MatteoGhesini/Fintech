@@ -13,6 +13,8 @@ function [Weights,TEV_return] = mainKalman(model,x_initial,Returns,Date,Benchmar
 
     y = model.y;
     m = size(model.V1,1);
+    % The construction of P is based on the case study and some literature
+    % found on the web. The model is quite sensible to this choice.
     P = ones(m,m)*(y(1)-Returns(1,:)*x_initial); 
     
     [~,Weights,~] = KalmanFilter(model,x_initial,P);
@@ -27,6 +29,7 @@ function [Weights,TEV_return] = mainKalman(model,x_initial,Returns,Date,Benchmar
         display(['TEV Benchmark = ',num2str(TEV_return)])
     end
 
+    % To make a plot of Return and Price
 %     figure()
 %     subplot(1,2,1)
 %     plot(Date,ret2price(y),'Color','b', 'LineWidth', 1.5)
@@ -50,21 +53,23 @@ function [Weights,TEV_return] = mainKalman(model,x_initial,Returns,Date,Benchmar
 %     xlabel("years")
 %     ylabel("returns")
 %     legend('Target','Predicted')
-
+    
+    % To make a plot of Price - Kalman Prediction
     figure()
     plot(Date,ret2price(y),'Color','b', 'LineWidth', 1.5)
     hold on
     plot(Date,ret2price(Prediction),'Color','r', 'LineWidth', 1.5)
-    xlabel("years")
-    ylabel("prices")
+    xlabel("Year")
+    ylabel("Price")
     if nargin<5
         legend('Target','Predicted')
     else
         plot(Date,ret2price(Benchmark),'Color','g', 'LineWidth', 1.5)
-        xlabel("years")
-        ylabel("prices")
+        xlabel("Year")
+        ylabel("Price")
         legend('Target','Predicted','Benchmark')
     end
+    title('Kalman Prediction')
 
 
 end % end mainKalman

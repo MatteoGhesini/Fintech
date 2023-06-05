@@ -5,10 +5,10 @@
 <p align="left"> Team members:
 <ul>
   <li>Matteo Ghesini (<a href="https://github.com/MatteoGhesini/" target="_blank">Github</a>, <a href="https://www.linkedin.com/in/matteo-ghesini-223084210" target="_blank">Linkedin</a>)</li>
-  <li>Alice Mazze (<a href="https://github.com/ /" target="_blank">Github</a>, <a href="https://www.linkedin.com/in/ /" target="_blank">Linkedin</a>)</li>
-  <li>Anna Tegon (<a href="https://github.com/ /" target="_blank">Github</a>, <a href="https://www.linkedin.com/in/ /" target="_blank">Linkedin</a>)</li>
-  <li>Camilla Volterra (<a href="https://github.com/ /" target="_blank">Github</a>, <a href="https://www.linkedin.com/in/ /" target="_blank">Linkedin</a>)</li>
-  <li>Qiao Wu (<a href="https://github.com/ /" target="_blank">Github</a>, <a href="https://www.linkedin.com/in/ /" target="_blank">Linkedin</a>)</li>
+  <li>Alice Mazze </li>
+  <li>Anna Tegon </li>
+  <li>Camilla Volterra </li>
+  <li>Qiao Wu </li>
 </ul>
 </p>
 
